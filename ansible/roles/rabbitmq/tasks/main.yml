@@ -1,0 +1,25 @@
+---
+
+- name: Install Package
+  yum: pkg=rabbitmq-server state=installed
+
+- name: Service Running
+  service: name=rabbitmq-server state=running enabled=true
+
+- name: Setup User
+  rabbitmq_user: user={{ rabbitmq_username }}
+                 password={{ rabbitmq_password }}
+                 vhost=/
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 state=present
+
+- name: Enable Management Plugin
+  rabbitmq_plugin: names=rabbitmq_management state=enabled
+  when: rabbitmq_management
+  environment:
+      PATH: "{{ ansible_env.PATH }}:/usr/lib/rabbitmq/lib/rabbitmq_server-{{ rabbitmq_version }}/sbin/"
+  notify:
+      - restart rabbitmq-server
+

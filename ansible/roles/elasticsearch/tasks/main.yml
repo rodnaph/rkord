@@ -1,0 +1,14 @@
+---
+
+- name: Elasticsearch Repo
+  command: rpm --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+
+- name: Configure Repo
+  copy: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch.repo
+
+- name: Install Package
+  yum: pkg=elasticsearch state=installed
+
+- name: Service Running
+  service: name=elasticsearch state=running enabled=true
+

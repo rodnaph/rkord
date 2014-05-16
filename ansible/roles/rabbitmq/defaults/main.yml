@@ -1,0 +1,7 @@
+---
+
+rabbitmq_username: rkord
+rabbitmq_password: blank
+rabbitmq_management: false
+rabbitmq_version: 3.1.5
+
